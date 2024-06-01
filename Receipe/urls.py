@@ -16,7 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from vege.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('',Hello,name="Hello"),
+    path('receipe/', receipe, name="receipe"),
+
+    path('delete_reciepe/<id>/', delete_reciepe , name="delete_reciepe"),  # DYNAMIC URL
+    path('update_reciepe/<id>/', update_reciepe , name="update_reciepe"),
+    path('login_page/',login_page, name='login_page'),
+    path('register/',register, name='register'),
+    path('logout_page/',logout_page, name='logout_page'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

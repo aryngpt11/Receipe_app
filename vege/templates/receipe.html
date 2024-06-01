@@ -1,0 +1,90 @@
+{% extends "Base.html" %}
+{% block start %}
+
+<!-- {{request.user}}
+{{request.user.first_name}}  to show the the name of the person who are logged in-->
+    
+<div class="container mt-5" >
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2 align="center">Add Receipe</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
+          <input name="receipe_name" required type="text" class="form-control">
+          
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1"  class="form-label">Receipe Description</label>
+          <textarea class="form-control" name="recepie_description" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+            <input name="receipe_image" type="file" class="form-control">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Add Receipe</button>
+      </form>
+      <!-- search a receipe in the db -->
+      <div class="mt-5">
+        
+        <div class="mx-auto col-6">
+        <form>
+          <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Search Food</label>
+          <input name="search_food" type="text" class="form-control">
+
+
+          </div>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        </div>
+      </div>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sr. No</th>
+            <th scope="col">Receipe Name</th>
+            <th scope="col">Receipe Description</th>
+            <th scope="col">Receipe Image</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        {% for recipe in recipes %}
+        <tbody>
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{recipe.receipe_name}}</td>
+            <td>{{recipe.recepie_description}}</td>
+            <td>
+              <img src="/media/{{recipe.receipe_image}}" style="height: 200px;"></td>
+              <td>
+                <!-- <a href="delete_reciepe/{{receipe.id}}" class="btn btn-danger">Delete</a> -->
+                <a href="{% url 'delete_reciepe' recipe.id %}" class="btn btn-danger m-2">Delete</a>
+                <a href="{% url 'update_reciepe' recipe.id %}" class="btn btn-success m-2">Update</a>
+
+        
+                
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table> 
+
+      <!-- {% for recipe in recipes %}
+      <div style="margin: 10px; padding: 10px;background:black;color: white; min-height: 100px;" >
+     <div style="margin-bottom:10px;">
+     <span style="color:orange;">name :</span>  {{recipe.receipe_name}}
+     </div>
+      <div style="margin:10px; padding:10px">
+        {{recipe.recepie_description}}
+      </div>
+      </div>
+      {% endfor %}
+    </div> -->
+    
+{% endblock %}
+
+
+   
